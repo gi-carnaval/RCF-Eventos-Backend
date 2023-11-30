@@ -1,0 +1,48 @@
+{
+  "name": "rcf-eventos-backend",
+  "version": "1.0.0",
+  "description": "Backend of a application to manage events and contracts of Ricardo Carnaval Fotografia Corporation",
+  "main": "n",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "test": "test",
+    "commitlint": "commitlint --edit",
+    "commit": "git-cz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gi-carnaval/RCF-Eventos.git"
+  },
+  "keywords": [
+    "Management",
+    "System"
+  ],
+  "author": "Giovani Carnaval",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gi-carnaval/RCF-Eventos/issues"
+  },
+  "homepage": "https://github.com/gi-carnaval/RCF-Eventos#readme",
+  "dependencies": {
+    "@fastify/cors": "^8.4.1",
+    "@prisma/client": "^5.5.2",
+    "dayjs": "^1.11.10",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.24.3",
+    "tsx": "^3.14.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "@types/node": "^20.9.0",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^8.0.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
