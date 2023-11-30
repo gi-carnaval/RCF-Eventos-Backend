@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id                     String                @id @default(cuid())
+  hirer                  String
+  createdAt              DateTime
+  eventType              EventType?            @relation(fields: [eventTypeId], references: [id])
+  photographicRegister   PhotographicRegister? @relation(fields: [photographicRegisterId], references: [id])
+  album                  Album?                @relation(fields: [albumId], references: [id])
+  sessaoPreCasamento     SessaoPreCasamento?   @relation(fields: [sessaoPreCasamentoId], references: [id])
+  makingOf               MakingOf?             @relation(fields: [makingOfId], references: [id])
+  painel                 Painel?               @relation(fields: [painelId], references: [id])
+  payment                Payment?              @relation(fields: [paymentId], references: [id])
+  eventTypeId            String?
+  desconto               Float?
+  valorTotal             Float?
+  photographicRegisterId String?
+  albumId                String?
+  sessaoPreCasamentoId   String?
+  makingOfId             String?
+  painelId               String?
+  paymentId              String?
+  appointment            Appointment[]
+
+  @@map("Event")
+}
+
+model PhotographicRegister {
+  id                   String  @id @default(cuid())
+  professionalQuantity String
+  photoAverage         String
+  value                Float
+  Event                Event[]
+}
+
+model Album {
+  id         String  @id @default(cuid())
+  size       String
+  pages      String
+  albumCover String
+  value      Float
+  Event      Event[]
+}
+
+model SessaoPreCasamento {
+  id    String  @id @default(cuid())
+  valor Float
+  Event Event[]
+}
+
+model MakingOf {
+  id    String  @id @default(cuid())
+  valor Float
+  Event Event[]
+}
+
+model Painel {
+  id      String  @id @default(cuid())
+  tamanho String
+  valor   Float
+  Event   Event[]
+}
+
+model Payment {
+  id                   String  @id @default(cuid())
+  numberOfInstallments String
+  startDate            String
+  installmentValue     Float
+  Event                Event[]
+}
+
+model Appointment {
+  id String @id @default(cuid())
+
+  appointmentTitle String
+  date             String
+  locale           String
+  dayOfWeek        String
+  time             String
+  eventId          String
+  event            Event? @relation(fields: [eventId], references: [id])
+}
+
+model EventType {
+  id    String  @id @default(cuid())
+  type  String
+  Event Event[]
+}
