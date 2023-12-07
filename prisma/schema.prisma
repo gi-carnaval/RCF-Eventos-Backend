@@ -14,21 +14,21 @@ model Event {
   id                     String                @id @default(cuid())
   hirer                  String
   createdAt              DateTime
+  discount               Float?
+  totalValue             Float?
   eventType              EventType?            @relation(fields: [eventTypeId], references: [id])
   photographicRegister   PhotographicRegister? @relation(fields: [photographicRegisterId], references: [id])
   album                  Album?                @relation(fields: [albumId], references: [id])
-  sessaoPreCasamento     SessaoPreCasamento?   @relation(fields: [sessaoPreCasamentoId], references: [id])
+  photoShoot             PhotoShoot?           @relation(fields: [photoShootId], references: [id])
   makingOf               MakingOf?             @relation(fields: [makingOfId], references: [id])
-  painel                 Painel?               @relation(fields: [painelId], references: [id])
+  photoPanel             PhotoPanel?           @relation(fields: [photoPanelId], references: [id])
   payment                Payment?              @relation(fields: [paymentId], references: [id])
   eventTypeId            String?
-  desconto               Float?
-  valorTotal             Float?
   photographicRegisterId String?
   albumId                String?
-  sessaoPreCasamentoId   String?
+  photoShootId           String?
   makingOfId             String?
-  painelId               String?
+  photoPanelId           String?
   paymentId              String?
   appointment            Appointment[]
 
@@ -52,23 +52,23 @@ model Album {
   Event      Event[]
 }
 
-model SessaoPreCasamento {
+model PhotoShoot {
   id    String  @id @default(cuid())
-  valor Float
+  value Float
   Event Event[]
 }
 
 model MakingOf {
   id    String  @id @default(cuid())
-  valor Float
+  value Float
   Event Event[]
 }
 
-model Painel {
-  id      String  @id @default(cuid())
-  tamanho String
-  valor   Float
-  Event   Event[]
+model PhotoPanel {
+  id    String  @id @default(cuid())
+  size  String
+  value Float
+  Event Event[]
 }
 
 model Payment {

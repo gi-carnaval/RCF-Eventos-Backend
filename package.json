@@ -25,20 +25,28 @@
   "homepage": "https://github.com/gi-carnaval/RCF-Eventos#readme",
   "dependencies": {
     "@fastify/cors": "^8.4.1",
+    "@fastify/static": "^6.12.0",
+    "@fastify/view": "^8.2.0",
     "@prisma/client": "^5.5.2",
     "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
     "fastify": "^4.24.3",
+    "html-pdf": "^3.0.1",
+    "puppeteer": "^21.5.2",
     "tsx": "^3.14.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
+    "@types/ejs": "^3.1.5",
+    "@types/html-pdf": "^3.0.3",
     "@types/node": "^20.9.0",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
-    "husky": "^8.0.3"
+    "husky": "^8.0.3",
+    "prisma": "^5.6.0"
   },
   "config": {
     "commitizen": {
