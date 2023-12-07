@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contrato</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="border-2 border-black p-2 rounded-2xl flex flex-row mb-6">
+    <div class="w-3/5"></div>
+    <div class="w-2/5 flex flex-wrap flex-col justify-center items-center">
+      <h2 class="font-black text-xl uppercase tracking-wider">Foto Carnaval</h2>
+      <h3 class="font-black text-base uppercase -mt-2">Ricardo Maurício Carnaval</h3>
+      <div class="flex flex-col justify-center items-center border border-zinc-400 w-full p-1 mb-1">
+        <span class="-mb-2">CPF: 145.741.698-00</span>
+        <span class="-mb-2">Rua João Albino Zaia, nº 45</span>
+        <span>Vila São Francisco - Ourinhos-SP</span>
+      </div>
+      <div class="h-10 flex bg-sky-950 px-3 rounded-xl items-center justify-center">
+        <span class="text-amber-400 text-lg font-bold uppercase tracking-widest">Contrato de Serviço</span>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col justify-between border-2 border-black p-2 rounded-2xl h-[7in]">
+    <div>
+      <div class="flex flex-col ">
+        <p>
+          <span class="font-black">Contratado: Ricardo Maurício Carnaval</span>
+        </p>
+        <p>
+          <span class="font-black">Contratante: </span>
+          <span class="underline"><%= event.hirer %></span>
+        </p>
+        <p>
+          <span class="font-black">Tipo de Evento: </span>
+          <span class="underline capitalize"><%= event.eventType.type %></span>
+        </p>
+      </div>
+      <div class="mb-4">
+        <table class="border-2 border-black w-full">
+          <thead class="border-2 border-black">
+            <tr class="bg-zinc-200">
+              <th class="border-2 border-black w-1/6">Data</th>
+              <th class="border-2 border-black w-3/6">Local</th>
+              <th class="border-2 border-black w-1/6">Dia da Semana</th>
+              <th class="border-2 border-black w-1/6">Horário</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (event.appointment.length > 0) { %>
+              <% event.appointment.forEach((singleAppointment) => { %>
+                <tr>
+                <td class="border-2 border-black text-center"><%= new Intl.DateTimeFormat('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit'}).format(new Date(singleAppointment.date)) %></td>  
+                <td class="border-2 border-black text-center"><%= singleAppointment.locale %></td>
+                <td class="border-2 border-black text-center"><%= singleAppointment.dayOfWeek %></td>
+                <td class="border-2 border-black text-center"><%= singleAppointment.time %></td>
+              </tr>
+              <% }) %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <% if (event.photographicRegister ) { %>
+        <div class="flex justify-between">
+          <div class="flex gap-2 flex-row">
+            <div class="w-5 h-5 border-[3px] border-black bg-black-20 flex justify-center items-center rounded-sm p-[3px]">
+              <svg xmlns="http://www.w3.org/2000/svg" height="329pt" viewBox="0 0 329.26933 329" width="329pt">
+                <path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0"/>
+              </svg>
+            </div>
+            <p>
+              <span>Registro fotográfico </span>
+              <span class="text-xs">(arquivos digitais entregue em pendrive)</span>,
+              <span> <%= event.photographicRegister.professionalQuantity %> profissionais, média de <%= event.photographicRegister.photoAverage %> fotos</span>
+            </p>
+          </div> 
+          <span>
+            <%= event.photographicRegister.value.toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            }) %>
+          </span>
+        </div>
+      <% }%>
+      <% if (event.album ) { %>
+        <div class="flex justify-between">
+          <div class="flex gap-2 flex-row">
+            <div class="w-5 h-5 border-[3px] border-black bg-black-20 flex justify-center items-center rounded-sm p-[3px]">
+              <svg xmlns="http://www.w3.org/2000/svg" height="329pt" viewBox="0 0 329.26933 329" width="329pt">
+                <path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0"/>
+              </svg>
+            </div>
+          
+            <p>
+              <span>Album encadernado tamanho </span>
+              <span><%= event.album.size %>,</span>
+              <span> contendo <%= event.album.pages %> páginas</span>
+              <% if(event.album.albumCover) { %>
+                <span>- Capa <%= event.album.albumCover %></span>
+              <% } %>
+            </p>
+          </div>
+          <div class="w-3/12 h-4 border-b border-black border-dashed"></div>
+          <span>
+            <%= event.album.value.toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            }) %>
+          </span>
+        </div>
+      <% }%>
+      <% if (event.photoShoot ) { %>
+        <div class="flex justify-between gap-2">
+          <div class="w-3/12 flex gap-2 flex-row flex-nowrap">
+            <div class="w-5 h-5 border-[3px] border-black bg-black-20 flex justify-center items-center rounded-sm p-[3px]">
+              <svg xmlns="http://www.w3.org/2000/svg" height="329pt" viewBox="0 0 329.26933 329" width="329pt">
+                <path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0"/>
+              </svg>
+            </div>
+            <p>
+              <span>Sessão de Fotos </span>
+            </p>
+          </div>
+          <div class="w-5/6 h-4 border-b border-black border-dashed"></div>
+          <span>
+            <%= event.photoShoot.value.toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            }) %>
+          </span>
+        </div>
+      <% }%>
+      <% if (event.makingOf ) { %>
+        <div class="flex justify-between gap-2">
+          <div class="w-1/6 flex gap-2 flex-row flex-nowrap">
+            <div class="w-5 h-5 border-[3px] border-black bg-black-20 flex justify-center items-center rounded-sm p-[3px]">
+              <svg xmlns="http://www.w3.org/2000/svg" height="329pt" viewBox="0 0 329.26933 329" width="329pt">
+                <path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0"/>
+              </svg>
+            </div>
+            <p>
+              <span class="">Making Of </span>
+            </p>
+          </div>
+          <div class="w-5/6 h-4 border-b border-black border-dashed"></div>
+          <span>
+            <%= event.makingOf.value.toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            }) %>
+          </span>
+        </div>
+      <% }%>
+      <% if (event.album ) { %>
+        <div class="flex justify-between">
+          <div class="flex gap-2 flex-row">
+            <div class="w-5 h-5 border-[3px] border-black bg-black-20 flex justify-center items-center rounded-sm p-[3px]">
+              <svg xmlns="http://www.w3.org/2000/svg" height="329pt" viewBox="0 0 329.26933 329" width="329pt">
+                <path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0"/>
+              </svg>
+            </div>
+            <p>
+              <span>Album encadernado tamanho </span>
+              <span><%= event.album.size %>,</span>
+              <span> contendo <%= event.album.pages %> páginas</span>
+              <% if(event.album.albumCover) { %>
+                <span>- Capa <%= event.album.albumCover %></span>
+              <% } %>
+            </p>
+          </div>
+          <span>
+            <%= event.album.value.toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            }) %>
+          </span>
+        </div>
+      <% }%>
+    </div>
+    <div class="flex">
+      <div class="w-3/5"></div>
+      <div class="w-2/5 flex flex-col items-end gap-2">
+        <% if (false) { %>
+        <span class="font-bold text-lg">
+          Desconto
+        </span>
+        <% } %>
+        <div class="flex justify-end items-center gap-2">
+          <span class="font-bold text-lg">Total </span>
+          <span class="border-2 border-black p-1 text-lg">
+            <%= event.valorTotal.toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            }) %>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
