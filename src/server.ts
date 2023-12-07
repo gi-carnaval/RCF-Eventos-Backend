@@ -6,21 +6,44 @@ import { eventRoutes } from "./routes/event";
 import { eventTypesRoutes } from "./routes/eventType";
 import { appointmentRoutes } from "./routes/appointment";
 import { photographicRegisterRoutes } from './routes/photographicRegister';
+import { albumRoutes } from './routes/album';
+import { reportRoutes } from './routes/reports';
+import path from 'path';
+import fastifyStatic from '@fastify/static';
+import { makingOfRoutes } from './routes/makingOf';
+import { photoShootRoutes } from './routes/photoShoot';
+import { photoPanelRoutes } from './routes/photoPanel';
 
 const start = async () => {
   const fastify = Fastify({
-      logger: true,
+      logger: true, 
   })
 
   try{
       await fastify.register(cors, {
           origin: true
+      }, )
+      
+      await fastify.register(require("@fastify/view"), {
+        engine: {
+          ejs: require("ejs"),
+        },
+      })
+
+      fastify.register(fastifyStatic, {
+        root: path.join(__dirname, '../', '../'),
+        
       })
 
       await fastify.register(eventRoutes)
       await fastify.register(eventTypesRoutes)
       await fastify.register(appointmentRoutes)
       await fastify.register(photographicRegisterRoutes)
+      await fastify.register(albumRoutes)
+      await fastify.register(reportRoutes)
+      await fastify.register(makingOfRoutes)
+      await fastify.register(photoShootRoutes)
+      await fastify.register(photoPanelRoutes)
 
       await fastify.listen({ port: 3030 })
       console.log("Server Started")

@@ -1,11 +1,11 @@
 import { FastifyInstance } from "fastify"
 import { z } from "zod"
 import { prisma } from "../lib/prisma"
+import { calcFinalValue } from "../lib/functions"
 
 export async function eventRoutes(fastify: FastifyInstance) {
   fastify.get('/events', async (request) =>{
     const events = await prisma.event.findMany({
-      orderBy: {id: 'asc'},
       include: {
         eventType: true
       }
@@ -14,7 +14,7 @@ export async function eventRoutes(fastify: FastifyInstance) {
     return events
   })
   
-  fastify.get('/events/:id', async (request) =>{
+  fastify.get('/event/:id', async (request) =>{
     const getEventParams = z.object({
       id: z.string(),
     })
@@ -29,9 +29,13 @@ export async function eventRoutes(fastify: FastifyInstance) {
         id: true,
         hirer: true,
         eventType: true,
+        valorTotal: true,
         appointment: true,
         photographicRegister: true,
-        album: true
+        album: true,
+        makingOf: true,
+        photoShoot: true,
+        photoPanel: true
       }
       
     })
@@ -39,7 +43,7 @@ export async function eventRoutes(fastify: FastifyInstance) {
     return event
   })
 
-  fastify.post('/events', async (request) => {
+  fastify.post('/event', async (request) => {
     const createEventBody = z.object({
       hirer: z.string(),
       eventType: z.string(),
@@ -61,7 +65,7 @@ export async function eventRoutes(fastify: FastifyInstance) {
     }
   })
 
-  fastify.put('/events/photographicRegister/create', async (request) => {
+  fastify.put('/event/photographicRegister/create', async (request) => {
     const createPhotographicRegisterBody = z.object({
       professionalQuantity: z.string(),
       photoAverage: z.string(),
@@ -75,7 +79,7 @@ export async function eventRoutes(fastify: FastifyInstance) {
       await prisma.event.update({
         where: { 
           id: eventId,
-        }, 
+        },
         data: {
           photographicRegister: {
             create: {
@@ -87,7 +91,127 @@ export async function eventRoutes(fastify: FastifyInstance) {
         }
       })
     } catch (error) {
-      
+      console.error(error)
     }
+
+    await calcFinalValue(eventId)
   })
+
+  fastify.put('/event/album/create', async (request) => {
+    const createAlbumBody = z.object({
+      size: z.string(),
+      pages: z.string(),
+      albumCover: z.string(),
+      value: z.number(),
+      eventId: z.string()
+    })
+
+    const {size, pages, albumCover, value, eventId} = createAlbumBody.parse(request.body)
+
+    try {
+      await prisma.event.update({
+        where: { 
+          id: eventId,
+        }, 
+        data: {
+          album: {
+            create: {
+              albumCover,
+              pages,
+              size,
+              value
+            }
+          }
+        }
+      })
+    } catch (error) {
+      console.error(error)
+    }
+    await calcFinalValue(eventId)
+  })
+
+  fastify.put('/event/photoShoot/create', async (request) => {
+    const createPhotoShootBody = z.object({
+      value: z.number(),
+      eventId: z.string()
+    })
+
+    const {value, eventId} = createPhotoShootBody.parse(request.body)
+
+    try {
+      await prisma.event.update({
+        where: { 
+          id: eventId,
+        }, 
+        data: {
+          photoShoot: {
+            create: {
+              value,
+            }
+          }
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    await calcFinalValue(eventId)
+  })
+
+  fastify.put('/event/makingOf/create', async (request) => {
+    const createMakingOfBody = z.object({
+      value: z.number(),
+      eventId: z.string()
+    })
+
+    const {value, eventId} = createMakingOfBody.parse(request.body)
+
+    try {
+      await prisma.event.update({
+        where: { 
+          id: eventId,
+        }, 
+        data: {
+          makingOf: {
+            create: {
+              value,
+              
+            }
+          }
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    await calcFinalValue(eventId)
+  })
+
+  fastify.put('/event/photoPanel/create', async (request) => {
+    const createPhotoPanelBody = z.object({
+      size: z.string(),
+      value: z.number(),
+      eventId: z.string()
+    })
+
+    const {size, value, eventId} = createPhotoPanelBody.parse(request.body)
+
+    try {
+      await prisma.event.update({
+        where: { 
+          id: eventId,
+        }, 
+        data: {
+          photoPanel: {
+            create: {
+              size,
+              value,
+            }
+          }
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    await calcFinalValue(eventId)
+  })
+
 }
