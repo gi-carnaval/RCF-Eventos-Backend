@@ -22,7 +22,6 @@ model Event {
   photoShoot             PhotoShoot?           @relation(fields: [photoShootId], references: [id])
   makingOf               MakingOf?             @relation(fields: [makingOfId], references: [id])
   photoPanel             PhotoPanel?           @relation(fields: [photoPanelId], references: [id])
-  payment                Payment?              @relation(fields: [paymentId], references: [id])
   eventTypeId            String?
   photographicRegisterId String?
   albumId                String?
@@ -31,6 +30,7 @@ model Event {
   photoPanelId           String?
   paymentId              String?
   appointment            Appointment[]
+  installments           Installments[]
 
   @@map("Event")
 }
@@ -71,17 +71,17 @@ model PhotoPanel {
   Event Event[]
 }
 
-model Payment {
-  id                   String  @id @default(cuid())
-  numberOfInstallments String
-  startDate            String
-  installmentValue     Float
-  Event                Event[]
+model Installments {
+  id                String @id @default(cuid())
+  installmentNumber Int
+  date              String
+  installmentValue  Float
+  eventId           String
+  event             Event? @relation(fields: [eventId], references: [id])
 }
 
 model Appointment {
-  id String @id @default(cuid())
-
+  id               String @id @default(cuid())
   appointmentTitle String
   date             String
   locale           String
