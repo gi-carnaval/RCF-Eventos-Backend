@@ -38,27 +38,29 @@ export async function calcFinalValue(eventId: string | undefined) {
     })
 
     // Inicializar o valor total do evento como zero
-    let valorTotal = 0;
+    let totalValue = 0;
     console.log("Get Values: ", oldValues)
     if (oldValues.photographicRegister) {
-      valorTotal += oldValues.photographicRegister.value;
+      totalValue += oldValues.photographicRegister.value;
     }
     if (oldValues.album) {
-      valorTotal += oldValues.album.value;
+      totalValue += oldValues.album.value;
     }
     if (oldValues.photoShoot) {
-      valorTotal += oldValues.photoShoot.value;
+      totalValue += oldValues.photoShoot.value;
     }
     if (oldValues.makingOf) {
-      valorTotal += oldValues.makingOf.value;
+      totalValue += oldValues.makingOf.value;
     }
     if (oldValues.photoPanel) {
-      valorTotal += oldValues.photoPanel.value;
+      totalValue += oldValues.photoPanel.value;
     }
 
     await prisma.event.update({
       where: { id: eventId },
-      data: { valorTotal },
+      data: {
+        totalValue
+      }
     });
 
   } catch (error) {

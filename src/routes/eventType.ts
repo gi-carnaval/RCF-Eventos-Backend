@@ -17,7 +17,7 @@ export async function eventTypesRoutes(fastify: FastifyInstance) {
         }
       })
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   })
   

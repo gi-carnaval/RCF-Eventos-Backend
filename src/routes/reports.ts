@@ -36,7 +36,6 @@ export async function reportRoutes(fastify: FastifyInstance) {
 
     await browser.close()
     const filePath =path.join(__dirname, "../",'/report/', 'Contrato.pdf')
-    console.log("File Path: ", filePath)
     const fileContent = fs.readFileSync(filePath);
 
     response.header('Content-Type', 'application/pdf');
@@ -59,7 +58,7 @@ export async function reportRoutes(fastify: FastifyInstance) {
       select: {
         id: true,
         hirer: true,
-        valorTotal: true,
+        totalValue: true,
         eventType: true,
         appointment: true,
         photographicRegister: true,

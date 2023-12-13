@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify"
 import { z } from "zod"
 import { prisma } from "../lib/prisma"
 import { calcFinalValue } from "../lib/functions"
+import dayjs from "dayjs"
 
 export async function eventRoutes(fastify: FastifyInstance) {
   fastify.get('/events', async (request) =>{
@@ -29,13 +30,18 @@ export async function eventRoutes(fastify: FastifyInstance) {
         id: true,
         hirer: true,
         eventType: true,
-        valorTotal: true,
+        totalValue: true,
         appointment: true,
         photographicRegister: true,
         album: true,
         makingOf: true,
         photoShoot: true,
-        photoPanel: true
+        photoPanel: true,
+        installments: {
+          orderBy: {
+            installmentNumber: 'asc'
+          }
+        }
       }
       
     })
@@ -61,7 +67,7 @@ export async function eventRoutes(fastify: FastifyInstance) {
         }
       })
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   })
 
@@ -152,7 +158,7 @@ export async function eventRoutes(fastify: FastifyInstance) {
         }
       })
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
     await calcFinalValue(eventId)
   })
@@ -180,7 +186,7 @@ export async function eventRoutes(fastify: FastifyInstance) {
         }
       })
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
     await calcFinalValue(eventId)
   })
@@ -209,9 +215,8 @@ export async function eventRoutes(fastify: FastifyInstance) {
         }
       })
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
     await calcFinalValue(eventId)
   })
-
 }
