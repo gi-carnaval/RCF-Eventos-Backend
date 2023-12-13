@@ -13,6 +13,7 @@ import fastifyStatic from '@fastify/static';
 import { makingOfRoutes } from './routes/makingOf';
 import { photoShootRoutes } from './routes/photoShoot';
 import { photoPanelRoutes } from './routes/photoPanel';
+import { installmentsRoutes } from './routes/installments';
 
 const start = async () => {
   const fastify = Fastify({
@@ -44,6 +45,7 @@ const start = async () => {
       await fastify.register(makingOfRoutes)
       await fastify.register(photoShootRoutes)
       await fastify.register(photoPanelRoutes)
+      await fastify.register(installmentsRoutes)
 
       await fastify.listen({ port: 3030 })
       console.log("Server Started")
