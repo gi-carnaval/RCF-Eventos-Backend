@@ -63,20 +63,21 @@
         </table>
       </div>
       <% if (event.photographicRegister ) { %>
-        <div class="flex justify-between">
+        <div class="flex gap-2 justify-between">
           <div class="flex gap-2 flex-row">
             <div class="w-5 h-5 border-[3px] border-black bg-black-20 flex justify-center items-center rounded-sm p-[3px]">
               <svg xmlns="http://www.w3.org/2000/svg" height="329pt" viewBox="0 0 329.26933 329" width="329pt">
                 <path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0"/>
               </svg>
             </div>
-            <p>
+            <p class="text-nowrap">
               <span>Registro fotográfico </span>
-              <span class="text-xs">(arquivos digitais entregue em pendrive)</span>,
+              <span class="text-[10px]">(arquivos digitais entregue em pendrive)</span>,
               <span> <%= event.photographicRegister.professionalQuantity %> profissionais, média de <%= event.photographicRegister.photoAverage %> fotos</span>
             </p>
-          </div> 
-          <span>
+          </div>
+          <div class="w-[calc(100%_-_15rem)] h-4 border-b border-black border-dashed"></div>
+          <span class="w-20">
             <%= event.photographicRegister.value.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
@@ -85,15 +86,15 @@
         </div>
       <% }%>
       <% if (event.album ) { %>
-        <div class="flex justify-between">
-          <div class="flex gap-2 flex-row">
+        <div class="flex gap-2 justify-between">
+          <div class="w-fit flex gap-2 flex-row">
             <div class="w-5 h-5 border-[3px] border-black bg-black-20 flex justify-center items-center rounded-sm p-[3px]">
               <svg xmlns="http://www.w3.org/2000/svg" height="329pt" viewBox="0 0 329.26933 329" width="329pt">
                 <path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0"/>
               </svg>
             </div>
           
-            <p>
+            <p class="text-nowrap">
               <span>Album encadernado tamanho </span>
               <span><%= event.album.size %>,</span>
               <span> contendo <%= event.album.pages %> páginas</span>
@@ -102,8 +103,8 @@
               <% } %>
             </p>
           </div>
-          <div class="w-3/12 h-4 border-b border-black border-dashed"></div>
-          <span>
+          <div class="w-[calc(100%_-_15rem)] h-4 border-b border-black border-dashed"></div>
+          <span class="w-20">
             <%= event.album.value.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
@@ -113,18 +114,18 @@
       <% }%>
       <% if (event.photoShoot ) { %>
         <div class="flex justify-between gap-2">
-          <div class="w-3/12 flex gap-2 flex-row flex-nowrap">
+          <div class="w-fit flex gap-2 flex-row flex-nowrap">
             <div class="w-5 h-5 border-[3px] border-black bg-black-20 flex justify-center items-center rounded-sm p-[3px]">
               <svg xmlns="http://www.w3.org/2000/svg" height="329pt" viewBox="0 0 329.26933 329" width="329pt">
                 <path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0"/>
               </svg>
             </div>
             <p>
-              <span>Sessão de Fotos </span>
+              <span class="text-nowrap">Sessão de Fotos </span>
             </p>
           </div>
-          <div class="w-5/6 h-4 border-b border-black border-dashed"></div>
-          <span>
+          <div class="w-[calc(100%_-_10rem)] h-4 border-b border-black border-dashed"></div>
+          <span class="w-20">
             <%= event.photoShoot.value.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
@@ -134,18 +135,18 @@
       <% }%>
       <% if (event.makingOf ) { %>
         <div class="flex justify-between gap-2">
-          <div class="w-1/6 flex gap-2 flex-row flex-nowrap">
+          <div class="w-fit flex gap-2 flex-row flex-nowrap">
             <div class="w-5 h-5 border-[3px] border-black bg-black-20 flex justify-center items-center rounded-sm p-[3px]">
               <svg xmlns="http://www.w3.org/2000/svg" height="329pt" viewBox="0 0 329.26933 329" width="329pt">
                 <path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0"/>
               </svg>
             </div>
-            <p>
-              <span class="">Making Of </span>
+            <p class="text-nowrap">
+              <span>Making Of </span>
             </p>
           </div>
-          <div class="w-5/6 h-4 border-b border-black border-dashed"></div>
-          <span>
+          <div class="w-[calc(100%_-_10rem)] h-4 border-b border-black border-dashed"></div>
+          <span class="w-20">
             <%= event.makingOf.value.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
@@ -153,7 +154,7 @@
           </span>
         </div>
       <% }%>
-      <% if (event.album ) { %>
+      <% if (event.photoPanel ) { %>
         <div class="flex justify-between">
           <div class="flex gap-2 flex-row">
             <div class="w-5 h-5 border-[3px] border-black bg-black-20 flex justify-center items-center rounded-sm p-[3px]">
@@ -161,17 +162,14 @@
                 <path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0"/>
               </svg>
             </div>
-            <p>
-              <span>Album encadernado tamanho </span>
-              <span><%= event.album.size %>,</span>
-              <span> contendo <%= event.album.pages %> páginas</span>
-              <% if(event.album.albumCover) { %>
-                <span>- Capa <%= event.album.albumCover %></span>
-              <% } %>
+            <p class="text-nowrap">
+              <span>Painel Fotográfico </span>
+              <span>Tamanho: <%= event.photoPanel.size %></span>
             </p>
           </div>
-          <span>
-            <%= event.album.value.toLocaleString('pt-br', {
+          <div class="w-[calc(100%_-_10rem)] h-4 border-b border-black border-dashed"></div>
+          <span class="w-20">
+            <%= event.photoPanel.value.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
             }) %>

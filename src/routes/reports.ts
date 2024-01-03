@@ -64,9 +64,12 @@ export async function reportRoutes(fastify: FastifyInstance) {
         photographicRegister: true,
         album: true,
         photoShoot: true,
-        makingOf: true
+        makingOf: true,
+        photoPanel: true
       }
     })
+
+    console.log("Event Here: ", event)
 
     ejs.renderFile(
       path.join(__dirname, "../", '/reportsTemplate/', 'print.ejs'),
@@ -75,7 +78,7 @@ export async function reportRoutes(fastify: FastifyInstance) {
         if(err) {
           return response.send(err)
         }
-          response.header('Content-Type', 'text/html').send(html) 
+          return response.header('Content-Type', 'text/html').send(html) 
       }
     )
   })
