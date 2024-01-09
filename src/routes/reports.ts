@@ -65,7 +65,13 @@ export async function reportRoutes(fastify: FastifyInstance) {
         album: true,
         photoShoot: true,
         makingOf: true,
-        photoPanel: true
+        photoPanel: true,
+        discount: true,
+        installments: {
+          orderBy: {
+            installmentNumber: 'asc'
+          }
+        }
       }
     })
 

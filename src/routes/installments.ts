@@ -2,6 +2,8 @@ import { FastifyInstance } from "fastify"
 import { z } from "zod"
 import { prisma } from "../lib/prisma"
 import dayjs from "dayjs"
+import { getAllInstallments, getFirstInstallmentIdAndQuantityOfInstalls } from "../lib/functions"
+import { CreateInstallmentProps } from "../types/installments"
 require('dayjs/locale/pt-br')
 
 export async function installmentsRoutes(fastify: FastifyInstance) {
@@ -22,42 +24,63 @@ export async function installmentsRoutes(fastify: FastifyInstance) {
   fastify.post('/installment', async (request, response) => {
 
     const createInstallmentsBody = z.object({
-      installmentNumber: z.number(),
-      date: z.string(),
+      downPayment: z.number(),
+      installmentQuantity: z.number(),
+      startDate: z.string(),
       installmentValue: z.number(),
       eventId: z.string()
     })
 
+    const { downPayment, installmentQuantity, startDate, installmentValue, eventId } = createInstallmentsBody.parse(request.body)
 
-    const ArraySchema = z.array(createInstallmentsBody)
+    let installments = <CreateInstallmentProps[]>[]
 
-    function validarArray(dados: unknown): { installmentNumber: number; date: string; installmentValue: number, eventId: string }[] | undefined {
-      try {
-        const resultado = ArraySchema.parse(dados);
-        return resultado;
-      } catch (error: any ) {
-        response.statusCode = 500
-        response.send(error.message)
-        return undefined;
+    for(let i = 0; i < installmentQuantity; i++){
+      let installmentData
+      if(i === 0 && downPayment !== 0) {
+        installmentData = {
+          installmentDate: dayjs(startDate).add(i, 'M').toISOString(),
+          installmentNumber: i + 1,
+          installmentValue: downPayment
+        }
+      } else {
+        installmentData = {
+          installmentDate: dayjs(startDate).add(i, 'M').toISOString(),
+          installmentNumber: i + 1,
+          installmentValue
+        }
       }
+
+      installments.push(installmentData)
     }
+    if(installments !== undefined) {
+      installments.map( async (installment) => {
 
-    const arrayValidado = validarArray(request.body)
-
-    if(arrayValidado !== undefined) {
-      arrayValidado.map( async (installment) => {
-
-        let parsedInstallmentDate = dayjs(installment.date)
+        let parsedInstallmentDate = dayjs(installment.installmentDate)
 
         await prisma.installments.create({
           data: {
             date: parsedInstallmentDate.toString(),
             installmentNumber: installment.installmentNumber,
             installmentValue: installment.installmentValue,
-            eventId: installment.eventId
+            eventId: eventId
           }
         })  
       })
     }
+  })
+
+  fastify.delete('/installment/', async (request) => {
+    const deleteInstallmentsBody = z.object({
+      eventId: z.string()
+    })
+
+    const {eventId} = deleteInstallmentsBody.parse(request.body)
+
+    await prisma.installments.deleteMany({
+      where: {
+        eventId
+      }
+    })
   })
 }

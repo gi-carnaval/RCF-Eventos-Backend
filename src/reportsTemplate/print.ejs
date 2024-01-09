@@ -23,7 +23,7 @@
       </div>
     </div>
   </div>
-  <div class="flex flex-col justify-between border-2 border-black p-2 rounded-2xl h-[7in]">
+  <div class="flex flex-col justify-between border-2 border-black p-2 rounded-2xl h-fit">
     <div>
       <div class="flex flex-col ">
         <p>
@@ -52,11 +52,11 @@
             <% if (event.appointment.length > 0) { %>
               <% event.appointment.forEach((singleAppointment) => { %>
                 <tr>
-                <td class="border-2 border-black text-center"><%= new Intl.DateTimeFormat('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit'}).format(new Date(singleAppointment.date)) %></td>  
-                <td class="border-2 border-black text-center"><%= singleAppointment.locale %></td>
-                <td class="border-2 border-black text-center"><%= singleAppointment.dayOfWeek %></td>
-                <td class="border-2 border-black text-center"><%= singleAppointment.time %></td>
-              </tr>
+                  <td class="border-2 border-black text-center"><%= new Intl.DateTimeFormat('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit'}).format(new Date(singleAppointment.date)) %></td>  
+                  <td class="border-2 border-black text-center"><%= singleAppointment.locale %></td>
+                  <td class="border-2 border-black text-center"><%= singleAppointment.dayOfWeek %></td>
+                  <td class="border-2 border-black text-center"><%= singleAppointment.time %></td>
+                </tr>
               <% }) %>
             <% } %>
           </tbody>
@@ -177,17 +177,45 @@
         </div>
       <% }%>
     </div>
-    <div class="flex">
-      <div class="w-3/5"></div>
-      <div class="w-2/5 flex flex-col items-end gap-2">
-        <% if (false) { %>
-        <span class="font-bold text-lg">
-          Desconto
-        </span>
+    <div class="flex mt-24">
+      <div class="w-3/5">
+        <table class="border-2 border-black">
+          <thead class="border-2 border-black">
+            <tr class="bg-zinc-200">
+              <th class="border-2 border-black px-4">Pagamentos</th>
+              <th class="border-2 border-black px-4">Data</th>
+              <th class="border-2 border-black px-4">Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% event.installments.forEach((installment) => { %>
+              <tr>
+                <td class="border-2 border-black text-center px-6"><%= installment.installmentNumber %></td>
+                <td class="border-2 border-black text-center px-6"><%= new Intl.DateTimeFormat('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit'}).format(new Date(installment.date)) %></td>  
+                <td class="border-2 border-black text-center px-6"><%= installment.installmentValue.toLocaleString('pt-br', {
+                  style: 'currency',
+                  currency: 'BRL',
+                }) %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <div class="w-2/5 flex flex-col items-end justify-end gap-2">
+        <% if (event.discount) { %>
+          <div class="flex justify-end items-center gap-2">
+          <span class="font-bold text-lg">Desconto: </span>
+          <span class="border-2 border-black p-1">
+            <%= event.discount.toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            }) %>
+          </span>
+        </div>
         <% } %>
         <div class="flex justify-end items-center gap-2">
           <span class="font-bold text-lg">Total </span>
-          <span class="border-2 border-black p-1 text-lg">
+          <span class="border-2 border-black p-1">
             <%= event.totalValue.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
