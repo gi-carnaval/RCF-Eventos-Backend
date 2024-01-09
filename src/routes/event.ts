@@ -2,7 +2,6 @@ import { FastifyInstance } from "fastify"
 import { z } from "zod"
 import { prisma } from "../lib/prisma"
 import { calcFinalValue } from "../lib/functions"
-import dayjs from "dayjs"
 
 export async function eventRoutes(fastify: FastifyInstance) {
   fastify.get('/events', async (request) =>{
@@ -69,6 +68,24 @@ export async function eventRoutes(fastify: FastifyInstance) {
     } catch (error) {
       console.error(error)
     }
+  })
+
+  fastify.put('/event/hirer/', async (request) => {
+    const updateEventHirerBody = z.object({
+      hirer: z.string(),
+      eventId: z.string()
+    })
+
+    const {hirer, eventId} = updateEventHirerBody.parse(request.body)
+
+    await prisma.event.update({
+      where: {
+        id: eventId
+      }, 
+      data: {
+        hirer
+      }
+    })
   })
 
   fastify.put('/event/photographicRegister/create', async (request) => {
