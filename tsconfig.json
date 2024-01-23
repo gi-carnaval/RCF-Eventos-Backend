@@ -3,7 +3,7 @@
     "sourceMap": true,
     "target": "es2020",
     "module": "commonjs",
-    "lib": ["esnext"],                     
+    "lib": ["esnext", "dom"],                     
     "allowJs": true,
     "outDir": "./build",                          
     "rootDir": "./",

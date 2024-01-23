@@ -7,7 +7,9 @@
     "dev": "tsx watch src/server.ts",
     "test": "test",
     "commitlint": "commitlint --edit",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "build": "tsc -p tsconfig.json",
+    "start": "node build/src/server.js"
   },
   "repository": {
     "type": "git",
@@ -31,7 +33,9 @@
     "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
+    "electron-packager": "^17.1.2",
     "fastify": "^4.24.3",
+    "fs": "^0.0.1-security",
     "html-pdf": "^3.0.1",
     "puppeteer": "^21.5.2",
     "tsx": "^3.14.0",
