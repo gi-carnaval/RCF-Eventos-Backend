@@ -22,7 +22,7 @@ export async function reportRoutes(fastify: FastifyInstance) {
     })
 
     await page.pdf({
-      path: `./src/report/${id}.pdf`,
+      path: `./src/report/contrato.pdf`,
       tagged: true,
       printBackground: true,
       format: 'A4',
@@ -33,16 +33,16 @@ export async function reportRoutes(fastify: FastifyInstance) {
         right: '20px'
       }
     })
-
     await browser.close()
-    const filePath = path.join(__dirname, "../",'/report/', `${id}.pdf`)
+
+    const filePath = path.join(__dirname, "../",'/report/contrato.pdf')
     const fileContent = fs.readFileSync(filePath);
 
     // response.header('Content-Type', 'application/pdf');
-    // response.header('Content-Disposition', `attachment; filename="${id}.pdf"`);
+    // response.header('Content-Disposition', `attachment; filename="contrato.pdf"`);
 
     response.send(fileContent);
-    return fileContent
+    // return fileContent
     // fs.unlink(path.join(__dirname, "../",'/report/', `${id}.pdf`), (err => { 
     //   if (err) console.log(err); 
     //   else { 
