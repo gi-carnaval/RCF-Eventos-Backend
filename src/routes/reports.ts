@@ -17,7 +17,7 @@ export async function reportRoutes(fastify: FastifyInstance) {
     const browser = await puppeteer.launch({headless: "new"})
     const page = await browser.newPage()
 
-    await page.goto(`http://127.0.0.1:3030/eventReport/${id}`, {
+    await page.goto(`${process.env.BASE_URL}/eventReport/${id}`, {
       waitUntil: 'networkidle0'
     })
 
@@ -43,12 +43,12 @@ export async function reportRoutes(fastify: FastifyInstance) {
 
     response.send(fileContent);
     return fileContent
-    fs.unlink(path.join(__dirname, "../",'/report/', `${id}.pdf`), (err => { 
-      if (err) console.log(err); 
-      else { 
-        console.log("\nDeleted file: example_file.txt"); 
-      } 
-    })); 
+    // fs.unlink(path.join(__dirname, "../",'/report/', `${id}.pdf`), (err => { 
+    //   if (err) console.log(err); 
+    //   else { 
+    //     console.log("\nDeleted file: example_file.txt"); 
+    //   } 
+    // })); 
   })
   
   fastify.get('/eventReport/:id', async (request, response) =>{
@@ -81,7 +81,6 @@ export async function reportRoutes(fastify: FastifyInstance) {
       }
     })
 
-    console.log("Event Here: ", event)
 
     ejs.renderFile(
       path.join(__dirname, "../", '/reportsTemplate/', 'print.ejs'),
