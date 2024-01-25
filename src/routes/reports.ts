@@ -22,7 +22,7 @@ export async function reportRoutes(fastify: FastifyInstance) {
     })
 
     await page.pdf({
-      path: `./src/report/Contrato.pdf`,
+      path: `./src/report/${id}.pdf`,
       tagged: true,
       printBackground: true,
       format: 'A4',
@@ -35,14 +35,20 @@ export async function reportRoutes(fastify: FastifyInstance) {
     })
 
     await browser.close()
-    const filePath =path.join(__dirname, "../",'/report/', 'Contrato.pdf')
+    const filePath = path.join(__dirname, "../",'/report/', `${id}.pdf`)
     const fileContent = fs.readFileSync(filePath);
 
-    response.header('Content-Type', 'application/pdf');
-    response.header('Content-Disposition', 'attachment; filename="Contrato.pdf"');
+    // response.header('Content-Type', 'application/pdf');
+    // response.header('Content-Disposition', `attachment; filename="${id}.pdf"`);
 
     response.send(fileContent);
-
+    return fileContent
+    fs.unlink(path.join(__dirname, "../",'/report/', `${id}.pdf`), (err => { 
+      if (err) console.log(err); 
+      else { 
+        console.log("\nDeleted file: example_file.txt"); 
+      } 
+    })); 
   })
   
   fastify.get('/eventReport/:id', async (request, response) =>{
