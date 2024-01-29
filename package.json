@@ -39,7 +39,7 @@
     "fastify": "^4.24.3",
     "fs": "^0.0.1-security",
     "html-pdf": "^3.0.1",
-    "puppeteer": "^21.5.2",
+    "puppeteer-core": "^21.9.0",
     "tsx": "^3.14.0",
     "zod": "^3.22.4"
   },

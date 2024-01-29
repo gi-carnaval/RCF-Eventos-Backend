@@ -4,7 +4,7 @@ import { z } from "zod"
 import path from "path"
 import ejs from "ejs"
 import fs from "fs"
-import puppeteer from "puppeteer"
+import puppeteer from "puppeteer-core"
 
 export async function reportRoutes(fastify: FastifyInstance) {
 
