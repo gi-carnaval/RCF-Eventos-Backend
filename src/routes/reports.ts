@@ -14,7 +14,11 @@ export async function reportRoutes(fastify: FastifyInstance) {
     })
 
     const { id } = getEventParams.parse(request.params)
-    const browser = await puppeteer.launch({headless: "new"})
+    const browser = await puppeteer.launch({
+      headless: "new", 
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH, 
+      args: ['--no-sandbox']
+    })
     const page = await browser.newPage()
 
     await page.goto(`${process.env.BASE_URL}/eventReport/${id}`, {
