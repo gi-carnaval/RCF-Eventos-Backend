@@ -11,5 +11,13 @@
       "src": "(.*)",
       "dest": "src/server.ts"
     }
-  ]
+  ],
+  "functions": {
+    "api/reports": {
+      "runtime": "nodejs16.x",
+      "environment": {
+        "PUPPETEER_EXECUTABLE_PATH": "/usr/bin/google-chrome"
+      }
+    }
+  }
 }
